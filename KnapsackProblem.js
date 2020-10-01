@@ -5,7 +5,7 @@
 * @return{number}
 */
 
-function KnapsackProblem(weights, values, maxWeight){
+function Knapsack01(weights, values, maxWeight){
     const maxValueMatrix = Array(weights.length+1).fill(0).map(()=> Array(maxWeight+1).fill(0));
 
     for(let rowIndex=1;rowIndex <= weights.length;rowIndex++){
@@ -20,4 +20,16 @@ function KnapsackProblem(weights, values, maxWeight){
     }
 
     return maxValueMatrix[weights.length][maxWeight];
+}
+
+function UnboundedKnapsack(weights, values, maxWeight){
+    let dpArray = Array(maxWeight+1).fill(0);
+    for(let i=0; i<=maxWeight; i++){
+        for(let j=0; j<values.length; j++){
+            if(weights[j]<=i){
+                dpArray[i]=Math.max(dpArray[i],dpArray[i-weights[j]]+values[j]);
+            }
+        }
+    }
+    return dpArray[maxWeight];
 }
